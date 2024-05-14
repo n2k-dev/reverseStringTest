@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reverse Words</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Функция для отправки данных формы через AJAX
+            $("#reverseForm").submit(function(event) {
+                event.preventDefault(); // Предотвращаем отправку формы по умолчанию
+                
+                // Получаем введенную строку
+                var formData = $(this).serialize();
+                
+                // Очищаем предыдущий результат
+                $("#result").empty();
+                
+                // Отправляем данные на сервер
+                $.ajax({
+                    type: "POST",
+                    url: "reverse.php",
+                    data: formData,
+                    success: function(response) {
+                        // Вставляем полученный результат на страницу
+                        $("#result").html(response);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <h2>Введите слова для реверсирования</h2>
+    <form id="reverseForm" method="post">
+        <label for="words">Слова:</label><br>
+        <input type="text" id="words" name="words" required style="width: 25rem;"><br><br>
+        <input type="submit" value="Реверсировать">
+    </form>
+    
+    <div id="result"></div>
+</body>
+</html>
